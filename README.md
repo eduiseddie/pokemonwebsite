@@ -1,39 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokédex em React ![pokeball](https://github.com/eduiseddie/pokemonwebsite/assets/100213506/aae04d76-9a65-4439-9c0e-d8fbdb9e3839)
 
-## Getting Started
+Bem-vindo ao projeto da Pokédex em React! Este é um projeto divertido que utiliza a API de Pokémon para criar uma Pokédex virtual. Agora, você pode explorar o mundo dos Pokémon diretamente do seu navegador.
 
-First, run the development server:
+## Visão Geral
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Neste projeto, construímos uma interface de usuário amigável que permite aos usuários:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Visualizar informações sobre diferentes Pokémon, incluindo seu nome, tipo, peso e altura.
+- Pesquisar Pokémon específicos pelo nome.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Tecnologias Utilizadas
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Este projeto é construído usando as seguintes tecnologias:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **React**: Utilizamos o React para criar a interface de usuário interativa e reativa.
+- **Pokémon API**: Conectamos nosso aplicativo à API de Pokémon para obter dados atualizados e detalhados sobre os Pokémon.
+- **Styled-components**: Usamos styled-components para estilizar nossos componentes React de forma elegante e modular.
+  
+## Como Executar o Projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Certifique-se de ter o Node.js e o npm (ou yarn) instalados em seu computador.
+2. Clone este repositório para sua máquina local.
+3. Navegue até o diretório do projeto no terminal.
+4. Execute o seguinte comando para instalar as dependências:
 
-## Learn More
+   ```bash
+   npm install
+   # ou
+   yarn install
+   
+5. Após a instalação das dependências, inicie o aplicativo com o seguinte comando:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# pokemonwebsite
+   ```bash
+   npm start
+   # ou
+   yarn start
+6. O aplicativo estará disponível em http://localhost:3000. Acesse este URL em seu navegador para explorar a Pokédex.
