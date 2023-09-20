@@ -1,27 +1,56 @@
 import { ToastContainer, toast } from 'react-toastify';
 import styles from "@/styles/Home.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
+import * as Icon from 'react-ionicons'
 import api from "@/components/api";
 import React from "react";
 
-
 export default function Home() {
-  const [results, setResults] = React.useState({});
+  const [results, setResults] = React.useState([]);
 
   const [search, setSearch] = React.useState("");
 
-  const getPokemon = async () => {
-    const searchFinal = search.toLowerCase().trim();
+  const [offset, setOffset] = React.useState(0);
+
+  const getPokemons = async () => {
+    setResults([]);
     api
-      .get(`/pokemon/${searchFinal}`)
+      .get(`/pokemon?limit=18&offset=${offset}`)
       .then((data) => {
-        setResults(data.data);
+        for (let i = 0; i < data.data.results.length; i++) {
+          api
+            .get(`/pokemon/${data.data.results[i].name}`)
+            .then((data) => {
+              setResults((oldArray) => [...oldArray, data.data]);
+            })
+            .catch((error) => {
+              toast.error("Pokemon não encontrado!");
+            })
+            .finally(() => {
+              console.log(results);
+            })
+        }
       })
       .catch((error) => {
         toast.error("Pokemon não encontrado!");
-        setResults({});
       });
   };
+
+  const getPokemon = async () => {
+    setResults([]);
+    api
+      .get(`/pokemon/${search}`)
+      .then((data) => {
+        setResults((oldArray) => [...oldArray, data.data]);
+      })
+      .catch((error) => {
+        toast.error("Pokemon não encontrado!");
+      });
+  }
+
+  React.useEffect(() => {
+    getPokemons();
+  }, []);
 
   return (
     <>
@@ -32,26 +61,55 @@ export default function Home() {
           placeholder="Procure um pokemon:"
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (search === "" && e.key === "Enter") {
+              getPokemons();
+            } else if (e.key === "Enter") {
               getPokemon();
             }
           }}
         />
-        {results?.name ? (
-          <div className={styles.pokemonCard}>
-            <img
-              src={results?.sprites?.front_default}
-              alt={results?.name}
-              className={styles.pokemonImage}
-            />
-            <div className={styles.pokemonInfo}>
-              <h1 className={styles.pokemonName}>Pokemon: {results?.name}</h1>
-              <h1 className={styles.pokemonInfo}>Peso: {results?.weight / 10}kg</h1>
-              <h1 className={styles.pokemonInfo}>Altura: {results?.height / 10}m</h1>
-              <h1 className={styles.pokemonInfo}>Tipo: {results?.types[0]?.type?.name}</h1>
-            </div>
-          </div>
-        ) : null}
+        <div className={styles.buttons}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              if (offset > 0) {
+                setOffset(offset - 18);
+                getPokemons();
+              }
+            }}
+          >
+            <Icon.ChevronBackOutline fontSize="30px" color="#000000" />
+          </button>
+          <button
+            className={styles.button}
+            onClick={() => {
+              setOffset(offset + 18);
+              getPokemons();
+            }}
+          >
+            <Icon.ChevronForwardOutline fontSize="30px" color="#000000" />
+          </button>
+        </div>
+        <div className={styles.cards}>
+          {
+            results?.map((pokemon, index) => {
+              return (
+                <div className={styles.pokemonCard} key={index}>
+                  <img
+                    src={pokemon?.sprites?.front_default}
+                    alt={pokemon?.name}
+                    className={styles.pokemonImage}
+                  />
+                  <div className={styles.pokemonInfo}>
+                    <h1 className={styles.pokemonName}>{pokemon?.name}</h1>
+                    <h1 className={styles.pokemonInfo}>Peso: {pokemon?.weight / 10}kg</h1>
+                    <h1 className={styles.pokemonInfo}>Altura: {pokemon?.height / 10}m</h1>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
       <ToastContainer />
     </>
